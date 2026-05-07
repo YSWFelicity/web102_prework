@@ -161,7 +161,29 @@ const sortedGames = GAMES_JSON.sort((item1, item2) => {
 });
 
 // use destructuring and the spread operator to grab the first and second games
+const [firstGame, secondGame, ...others] = sortedGames;
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
+const firstWord = document.createElement('p');
+firstWord.innerHTML = firstGame.name;
+firstGameContainer.appendChild(firstWord);
 
 // do the same for the runner up item
+const secondWord = document.createElement('p');
+secondWord.innerHTML = secondGame.name;
+secondGameContainer.appendChild(secondWord);
+
+/************************************************************************************
+ * Bonus: Search bar to filter games by name in real time
+ */
+
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", (event) => {
+  const query = event.target.value.toLowerCase();
+  const matchingGames = GAMES_JSON.filter((game) =>
+    game.name.toLowerCase().includes(query)
+  );
+  deleteChildElements(gamesContainer);
+  addGamesToPage(matchingGames);
+});
